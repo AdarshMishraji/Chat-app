@@ -79,11 +79,13 @@ io.on("connection", (socket) => {
               send_at: Date.now(),
             });
 
-            getUsersInRoom(user.room)
-              .then(({ users }) => {
-                io.to(user.room).emit("all-connected-users", users);
-              })
-              .catch(({ error }) => console.log(error));
+            setTimeout(() => {
+              getUsersInRoom(user.room)
+                .then(({ users }) => {
+                  io.to(user.room).emit("all-connected-users", users);
+                })
+                .catch(({ error }) => console.log(error));
+            }, 250);
 
             getRoomMessages(user.room)
               .then(({ messages }) => {
